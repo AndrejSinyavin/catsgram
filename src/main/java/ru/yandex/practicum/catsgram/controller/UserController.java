@@ -2,53 +2,39 @@ package ru.yandex.practicum.catsgram.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.User;
+import ru.yandex.practicum.catsgram.service.UserService;
 
-import java.util.HashSet;
 import java.util.Set;
+
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    private final Set<User> users = new HashSet<>();
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public Set<User> getListOfUsers() {
-        log.debug("Количество постов {}", users.size());
-        return users;
+        log.debug("Количество постов {}", userService.getListOfUsers().size());
+        return userService.getListOfUsers();
     }
 
     @PostMapping
-    public User addNewUser (@RequestBody User user) throws InvalidEmailException, UserAlreadyExistException {
-        String email = user.getEmail();
-        if (email == null || email.isEmpty() || email.isBlank()) {
-            throw new InvalidEmailException();
-        } else if (!users.add(user)) {
-            throw new UserAlreadyExistException();
-        } else {
-            log.debug("Добавлен пользователь {}", user);
-            return user;
-        }
+    public User addNewUser (@RequestBody User user) {
+        return userService.addNewUser(user);
     }
 
     @PutMapping
-    public User addOrUpdateUser(@RequestBody User user) throws InvalidEmailException {
-        String email = user.getEmail();
-        if (email == null || email.isEmpty() || email.isBlank()) {
-            throw new InvalidEmailException();
-        } else {
-            users.remove(user);
-            users.add(user);
-            return user;
-        }
-    }
-
-    private static class UserAlreadyExistException extends Throwable {
-    }
-
-    private static class InvalidEmailException extends Throwable {
+    public User addOrUpdateUser(@RequestBody User user) {
+        return userService.addOrUpdateUser(user);
     }
 }
 

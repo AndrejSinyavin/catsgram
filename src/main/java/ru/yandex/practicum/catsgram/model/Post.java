@@ -2,7 +2,9 @@ package ru.yandex.practicum.catsgram.model;
 
 import java.time.Instant;
 
-public class Post {
+public class
+
+Post {
 
     private final String author; // автор
     private final Instant creationDate = Instant.now(); // дата создания
@@ -30,6 +32,7 @@ public class Post {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public String getPhotoUrl() {
         return photoUrl;

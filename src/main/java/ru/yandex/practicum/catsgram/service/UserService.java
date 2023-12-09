@@ -7,7 +7,9 @@ import ru.yandex.practicum.catsgram.controller.UserController;
 import ru.yandex.practicum.catsgram.model.User;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -50,12 +52,19 @@ public class UserService {
         }
     }
 
-    private static class UserAlreadyExistException extends Throwable {
+    public Optional<User> findUserByEmail(String email) {
+        return users.stream()
+                .filter(user -> email.equals(user.getEmail()))
+                .collect(Collectors.toSet())
+                .stream().findFirst();
+    }
+
+    private static class UserAlreadyExistException extends RuntimeException {
         public UserAlreadyExistException(String str) {
         }
     }
 
-    private static class InvalidEmailException extends Throwable {
+    private static class InvalidEmailException extends RuntimeException {
         public InvalidEmailException(String wrongEmail) {
         }
     }

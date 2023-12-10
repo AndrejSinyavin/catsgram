@@ -22,8 +22,7 @@ public class UserService {
 
     public User addNewUser (User user) {
         try {
-            String email = user.getEmail();
-            if (email == null || email.isEmpty() || email.isBlank()) {
+            if (user.getEmail().isBlank()) {
                 throw new InvalidEmailException("Неверный email");
             } else if (!users.add(user)) {
                 throw new UserAlreadyExistException("Такой пользователь уже существует");
@@ -39,8 +38,7 @@ public class UserService {
 
     public User addOrUpdateUser(User user) {
         try {
-            String email = user.getEmail();
-            if (email == null || email.isEmpty() || email.isBlank()) {
+            if (user.getEmail().isBlank()) {
                 throw new InvalidEmailException("Неверный email");
             } else {
                 users.remove(user);
@@ -52,20 +50,22 @@ public class UserService {
         }
     }
 
-    public Optional<User> findUserByEmail(String email) {
-        return users.stream()
+    public User findUserByEmail(String email) {
+        Optional<User> result = users.stream()
                 .filter(user -> email.equals(user.getEmail()))
-                .collect(Collectors.toSet())
-                .stream().findFirst();
+                .findFirst();
+        return result.orElse(null);
     }
 
     private static class UserAlreadyExistException extends RuntimeException {
         public UserAlreadyExistException(String str) {
+            super(str);
         }
     }
 
     private static class InvalidEmailException extends RuntimeException {
         public InvalidEmailException(String wrongEmail) {
+            super(wrongEmail);
         }
     }
 }

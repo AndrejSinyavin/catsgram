@@ -1,13 +1,12 @@
 package ru.yandex.practicum.catsgram.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.Instant;
 
-public class Post {
-    private Integer id;
+public class
+
+Post {
+
     private final String author; // автор
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final Instant creationDate = Instant.now(); // дата создания
     private String description; // описание
     private String photoUrl; // url-адрес фотографии
@@ -16,14 +15,6 @@ public class Post {
         this.author = author;
         this.description = description;
         this.photoUrl = photoUrl;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getAuthor() {
@@ -41,6 +32,7 @@ public class Post {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public String getPhotoUrl() {
         return photoUrl;

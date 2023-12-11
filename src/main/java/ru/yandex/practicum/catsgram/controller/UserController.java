@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
 
-import java.util.Optional;
 import java.util.Set;
 
 
@@ -26,11 +25,6 @@ public class UserController {
     public Set<User> getListOfUsers() {
         log.debug("Количество постов {}", userService.getListOfUsers().size());
         return userService.getListOfUsers();
-    }
-
-    @GetMapping("/user/{email}")
-    public User getUserByEmail(@PathVariable String email) {
-        return userService.findUserByEmail(email);
     }
 
     @PostMapping

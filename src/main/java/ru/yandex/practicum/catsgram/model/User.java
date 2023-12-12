@@ -1,6 +1,7 @@
 package ru.yandex.practicum.catsgram.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class User {
     private String email;
@@ -41,6 +42,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return email.hashCode();
+        return Objects.hash(email);
     }
 }
